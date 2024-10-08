@@ -7,10 +7,10 @@ export class AchillesIDEPage {
     }
 
     async beforeRender() {
-
+        this.insertedText = "Dummy text"
     }
 
-    async afterRender(){
+    async afterRender() {
 
     }
 
