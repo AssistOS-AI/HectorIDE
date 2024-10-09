@@ -7,11 +7,15 @@ export class AchillesIDEPage {
     }
 
     async beforeRender() {
-        this.insertedText = "Dummy text"
+
     }
 
     async afterRender() {
 
     }
 
+
+}
+function saveProject() {
+    alert("Project Saved Successfully!");
 }

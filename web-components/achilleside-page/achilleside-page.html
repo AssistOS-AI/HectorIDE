@@ -1,1 +1,36 @@
-<div>$$insertedText</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Project Plan</title>
+    <link rel="stylesheet" href="achilleside-page.csscss">
+</head>
+<body>
+
+<div class="container">
+    <h1>Create Project Plan</h1>
+    <form action="#" method="post">
+        <label for="logo">Logo</label>
+        <div class="logo"></div>
+
+        <label for="project-title">Project Title</label>
+        <input type="text" id="project-title" name="project-title" placeholder="Project Title">
+
+        <label for="informative-text">Informative Text on goal, production</label>
+        <input type="text" id="informative-text" name="informative-text" placeholder="Informative Text on goal, production">
+
+        <label for="project-details">Promp Generare Project Specifications, APIs, etc</label>
+        <textarea id="project-details" name="project-details" placeholder="Enter details..."></textarea>
+
+        <div class="button-container">
+            <button type="button" onclick="saveProject()">Save Project</button>
+        </div>
+    </form>
+</div>
+
+<script src="achilleside-page.js"></script>
+
+
+</body>
+</html>
