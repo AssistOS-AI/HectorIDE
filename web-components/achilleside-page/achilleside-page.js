@@ -1,3 +1,5 @@
+const assistOSSDK = require("assistos")
+
 export class AchillesIDEPage {
     constructor(element, invalidate) {
         this.element = element;
@@ -5,6 +7,11 @@ export class AchillesIDEPage {
         this.invalidate();
 
     }
+    saveProject() {
+        const llmmodule = assistOSSDK.loadModule("llm")
+        alert("Project Saved Successfully!");
+    }
+
 
     async beforeRender() {
 
@@ -15,7 +22,4 @@ export class AchillesIDEPage {
     }
 
 
-}
-function saveProject() {
-    alert("Project Saved Successfully!");
 }
