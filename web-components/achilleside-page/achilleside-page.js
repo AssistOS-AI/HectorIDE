@@ -23,10 +23,7 @@ export class AchillesIDEPage {
     async afterRender() {
 
     }
-    saveProject1 = async () => {
-/*
-        alert("Project Saved Successfully!");
-*/
+    async saveProject1 (_target){
 
         try {
             await assistOS.loadifyFunction(async () => {
@@ -53,5 +50,5 @@ export class AchillesIDEPage {
             console.error("Error while saving the project:", error);
             alert(`Error: ${error.message || "Unknown error occurred"}`);
         }
-    };
+    }
 }
