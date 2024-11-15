@@ -1,6 +1,4 @@
-// import sdkModule from "../../../../../../../assistos-sdk/modules/application";
 
-const assistOSSDK = require("assistos")
 const applicationModule = require('assistos').loadModule('application', {});
 
 export class AchillesIDEPage {
@@ -11,12 +9,6 @@ export class AchillesIDEPage {
         this.documentId = this.element.getAttribute("data-documentId")
 
     }
-    saveProject() {
-        // const llmmodule = assistOSSDK.loadModule("llm")
-        alert("Project Saved Successfully!");
-
-    }
-
 
     async beforeRender() {
 
