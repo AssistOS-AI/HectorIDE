@@ -5,8 +5,6 @@ export class RoutingService {
 
        if (locationArray.length === 0 || locationArray[0] === ACHILLESIDE_PAGE) {
             const pageUrl = `${assistOS.space.id}/${appName}/${ACHILLESIDE_PAGE}`;
-           debugger
-
             await assistOS.UI.changeToDynamicPage(ACHILLESIDE_PAGE, pageUrl);
             return;
         }
