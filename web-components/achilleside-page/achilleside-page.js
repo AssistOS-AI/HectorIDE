@@ -11,11 +11,7 @@ export class AchillesIDEPage {
         this.documentId = this.element.getAttribute("data-documentId")
 
     }
-    saveProject() {
-        // const llmmodule = assistOSSDK.loadModule("llm")
-        alert("Project Saved Successfully!");
 
-    }
 
 
     async beforeRender() {
@@ -37,6 +33,7 @@ export class AchillesIDEPage {
 
                 const formElement = this.element.querySelector("form");
                 const formData = await assistOS.UI.extractFormInformation(formElement);
+                debugger;
                 if (!formData.isValid) {
                     return assistOS.UI.showApplicationError("Invalid form data", "Please fill all the required fields", "error");
                 }
@@ -45,7 +42,7 @@ export class AchillesIDEPage {
                 const response = await applicationModule.runApplicationFlow(
                     assistOS.space.id,
                     "AchillesIDE", // numele aplicatiei
-                    "GenerateTemplate", // numele flow ului
+                    "GenerateApplication", // numele flow ului
                     planData
                 );
 
