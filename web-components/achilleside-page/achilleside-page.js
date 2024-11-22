@@ -18,15 +18,8 @@ export class AchillesIDEPage {
 
     }
     async saveProject1 (_target){
-
         try {
             await assistOS.loadifyFunction(async () => {
-                const bookGenerationData = {
-                    llm: "ChatGPT",
-                    size: 8,
-                    documentId: this.documentId
-                };
-
                 const formElement = this.element.querySelector("form");
                 const formData = await assistOS.UI.extractFormInformation(formElement);
                 if (!formData.isValid) {
@@ -37,7 +30,7 @@ export class AchillesIDEPage {
                 const response = await applicationModule.runApplicationFlow(
                     assistOS.space.id,
                     "AchillesIDE", // numele aplicatiei
-                    "GenerateTemplate", // numele flow ului
+                    "GenerateTemplate", // numele flow-ului
                     planData
                 );
 
@@ -48,13 +41,8 @@ export class AchillesIDEPage {
                 );
             });
         } catch (error) {
-            console.error("Error while saving the project:", error);
-            alert(`Error: ${error.message || "Unknown error occurred"}`);
+            console.error("Error while saving the project:", error.message);
+            alert(`Error: ${error.message}`);
         }
-        // try {
-        //     await sdkModule.runApplicationFlow();
-        // } catch (error) {
-        //     console.error("Error in runApplicationFlow:", error);
-        // }
     }
 }
