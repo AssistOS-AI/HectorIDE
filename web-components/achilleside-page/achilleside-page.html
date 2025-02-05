@@ -1,24 +1,79 @@
-<div class="container">
-    <h1>Create Project Plan</h1>
-    <form action="#" method="post">
-        <label for="logo">Logo</label>
-        <div class="logo"></div>
+<div class="modal-content">
+    <form id="projectForm" class="form-content">
+        <div class="main-container">
+            <div class="content-card">
+                <div class="header">
+                    <h1>Achilles IDE</h1>
+                </div>
+                <hr class="divider" />
 
-        <label for="project-title">Project Title</label>
-        <input type="text" id="project-title" name="project-title" placeholder="Project Title">
+                <div class="form-group">
+                    <label for="projectTitle">Project Title</label>
+                    <div class="input-wrapper">
+                        <input
+                                type="text"
+                                id="projectTitle"
+                                name="projectTitle"
+                                class="input-field"
+                                placeholder="Enter project title"
+                                required
+                        />
+                        <div class="input-info">
+                            Provide a short, descriptive title for your project
+                        </div>
+                    </div>
+                </div>
 
-        <label for="informative-text">Informative Text on goal, production</label>
-        <input type="text" id="informative-text" name="informative-text" placeholder="Informative Text on goal, production">
+                <hr class="divider" />
 
-        <label for="project-details">Promp Generare Project Specifications, APIs, etc</label>
-        <textarea id="project-details" name="project-details" placeholder="Enter details..."></textarea>
+                <div class="form-group">
+                    <label for="informativeText">Informative Text on Goal and Production</label>
+                    <div class="input-wrapper">
+                        <textarea
+                                id="informativeText"
+                                name="informativeText"
+                                class="textarea-field"
+                                placeholder="Describe the goal and production..."
+                                rows="4"
+                                required
+                        ></textarea>
+                        <div class="input-info">
+                            Provide more context or overview of the project’s objective
+                        </div>
+                    </div>
+                </div>
 
-        <fieldset>
-            <legend>Do you want to generate technical diagrams for chapters?</legend>
+                <hr class="divider" />
 
-            <div>
-                <input type="checkbox" id="technicalDiagram" name="technicalDiagram"/>
-                <label for="technicalDiagram">Yes</label>
+                <div class="form-group">
+                    <label for="promptText">Prompt: Generate Project Specifications, APIs, etc.</label>
+                    <div class="input-wrapper">
+                        <textarea
+                                id="promptText"
+                                name="promptText"
+                                class="textarea-field"
+                                placeholder="Provide prompt details for generating project specifications, APIs, and more..."
+                                rows="4"
+                                required
+                        ></textarea>
+                        <div class="input-info">
+                            Add the details or questions to guide the generation process
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="divider" />
+
+                <div class="form-actions">
+                    <button
+                            type="submit"
+                            class="new-analysis-button"
+                            id="generateDocumentBtn"
+                    >
+                        <span class="button-icon">📄</span>
+                        Generate Document
+                    </button>
+                </div>
             </div>
 
         </fieldset>

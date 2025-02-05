@@ -2,6 +2,7 @@
 
 const assistOSSDK = require("assistos")
 const applicationModule = require('assistos').loadModule('application', {});
+const personalityModule = require('assistos').loadModule('personality', {});
 
 export class AchillesIDEPage {
     constructor(element, invalidate) {
@@ -12,54 +13,92 @@ export class AchillesIDEPage {
 
     }
 
-
-
     async beforeRender() {
 
     }
 
     async afterRender() {
+        this.setupEventListeners();
 
     }
-    async saveProject1 (_target){
 
+    setupEventListeners() {
+        const form = this.element.querySelector('#projectForm');
+        form.addEventListener('submit', async (e) => {
+            // console.log(112);
+            e.preventDefault();
+            await this.handleAnalysis(form);
+        });
+    }
+
+    async handleAnalysis(form) {
         try {
             await assistOS.loadifyFunction(async () => {
-                const bookGenerationData = {
-                    llm: "ChatGPT",
-                    size: 8,
-                    documentId: this.documentId
-                };
+                console.log('Extracting form data...');
+                const formData = await assistOS.UI.extractFormInformation(form);
+                console.log('Form data:', formData);
 
-                const formElement = this.element.querySelector("form");
-                const formData = await assistOS.UI.extractFormInformation(formElement);
-                debugger;
+
+                // TODO ce este extractFormInformation si un exemplu de formular invalid
                 if (!formData.isValid) {
+                    console.error('Invalid form data');
                     return assistOS.UI.showApplicationError("Invalid form data", "Please fill all the required fields", "error");
                 }
-                const planData = formData.data;
 
-                const response = await applicationModule.runApplicationFlow(
+                const { projectTitle, informativeText, promptText } = formData.data;
+                console.log('Extracted data:', { projectTitle, informativeText, promptText });
+                let projectData = {
+                    projectTitle,
+                    informativeText,
+                    promptText,
+                };
+
+                console.log('Running application task with data:', projectData);
+                const taskId = await applicationModule.runApplicationTask(
                     assistOS.space.id,
-                    "AchillesIDE", // numele aplicatiei
-                    "GenerateApplication", // numele flow ului
-                    planData
+                    "AchillesIDE",
+                    "GenerateProject",
+                    projectData
                 );
-
-                const documentId = response.data;
-                await assistOS.UI.changeToDynamicPage(
-                    `space-application-page`,
-                    `${assistOS.space.id}/Space/document-view-page/${documentId}`
-                );
+                console.log('Task created with ID:', taskId);
+                assistOS.watchTask(taskId);
+                await assistOS.UI.closeModal(this.element, taskId);
             });
+
         } catch (error) {
-            console.error("Error while saving the project:", error);
-            alert(`Error: ${error.message || "Unknown error occurred"}`);
+            console.error('Error in handleAnalysis:', error);
+            assistOS.UI.showApplicationError("Analysis Error", error.message, "error");
         }
-        // try {
-        //     await sdkModule.runApplicationFlow();
-        // } catch (error) {
-        //     console.error("Error in runApplicationFlow:", error);
-        // }
     }
+
+
+    // async saveProject1 (_target){
+    //
+    //     try {
+    //         await assistOS.loadifyFunction(async () => {
+    //             const formElement = this.element.querySelector("form");
+    //             const formData = await assistOS.UI.extractFormInformation(formElement);
+    //             if (!formData.isValid) {
+    //                 return assistOS.UI.showApplicationError("Invalid form data", "Please fill all the required fields", "error");
+    //             }
+    //             const planData = formData.data;
+    //
+    //             const response = await applicationModule.runApplicationFlow(
+    //                 assistOS.space.id,
+    //                 "AchillesIDE",
+    //                 "GenerateApplication",
+    //                 planData
+    //             );
+    //
+    //             const documentId = response.data;
+    //             await assistOS.UI.changeToDynamicPage(
+    //                 `space-application-page`,
+    //                 `${assistOS.space.id}/Space/document-view-page/${documentId}`
+    //             );
+    //         });
+    //     } catch (error) {
+    //         console.error("Error while saving the project:", error);
+    //         alert(`Error: ${error.message || "Unknown error occurred"}`);
+    //     }
+    // }
 }
