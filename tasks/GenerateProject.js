@@ -83,39 +83,44 @@ module.exports = {
 
             this.logInfo(`Parameters received: ${JSON.stringify(this.parameters)}`);
 
-            // 2. Construct the project generation prompt
             this.logProgress("Constructing project generation prompt...");
 
-            // This prompt instructs the LLM to generate a project outline in valid JSON format
             let projectPrompt = `
-You are an IT manager responsible to implement a project with the following  context:
+You are an IT manager responsible for implementing a software project based strictly on the practical implementation requirements provided by the user's input. Your task is to generate a detailed, step-by-step project outline in valid JSON format that focuses exclusively on the actionable aspects of building the application—from coding and testing to debugging, deployment, Docker containerization, and cloud strategies. The outline must consist of at least 10 chapters, and each chapter must include a "title" and a "summary" property. Each summary should be at least 400 characters long, composed of a minimum of 5 sentences, and provide concrete, technical steps, tools, and methodologies. Additionally, within each chapter include your (the LLM's) opinion on implementing the project from scratch, offering suggestions for implementation, recommended programming languages, and discussing pros and cons for various approaches and solutions.
 
-User's Project Focus: ${this.parameters.prompt || 'Provide a well-structured software project plan.'}
+The project should be implemented according to the following user inputs. For reference, here is an example of what the user might provide:
 
-Text to reference:
-${this.parameters.text}
+- **Project Title:** "Online Bookstore Application"
+- **Informative Text on Goal and Production:** "Develop a scalable and secure online bookstore that supports user registration, book browsing, search functionality, payment processing, and order tracking. The system should integrate inventory management and customer review functionalities."
+- **Prompt: Generate Project Specifications, APIs, etc.:** "Generate detailed project specifications including API design, database schema, microservices architecture, Docker containerization, CI/CD pipelines, and cloud deployment strategies."
+
+Use these example inputs as guidance. Your JSON output must strictly implement the practical application described by the user input, providing detailed implementation instructions.
 
 IMPORTANT - READ CAREFULLY:
-- DO NOT include any introductory text or commentary
-- START YOUR RESPONSE DIRECTLY with the JSON object
-- DO NOT include any text after the JSON object
-- Provide a valid JSON structure following the schema:
+- START YOUR RESPONSE DIRECTLY with the JSON object.
+- DO NOT include any introductory or concluding commentary.
+- The JSON must adhere to the following schema:
 {
   "chapters": [
     {
       "title": "string",
-      "summary": "string"
+      "summary": "string" // Must be at least 400 characters and composed of a minimum of 5 sentences. It should include concrete implementation steps, the LLM's opinion on starting the project from scratch, suggestions for programming languages, and pros and cons of various solutions.
     }
+    // Minimum of 10 chapter objects required.
   ]
 }
-- The summary section must have at least 200 characters, and be focused on the implementation from the chapter's name
-- Use ONLY English language and standard ASCII characters
-- DO NOT use special characters, emojis, or non-English text
-- Use only basic punctuation (periods, commas, spaces, parentheses)
+- Each chapter's summary must be strictly focused on practical implementation steps such as coding practices, testing, debugging, deployment procedures, Docker usage, and cloud deployment strategies. At least one chapter must be dedicated exclusively to cloud deployment and strategies.
+- Use ONLY English language and standard ASCII characters.
+- DO NOT include special characters, emojis, or non-English text.
+- Use only basic punctuation (periods, commas, spaces, parentheses).
 
 REMEMBER:
-- Start your response with { and end with } (no other text allowed)
+- Start your response with { and end with } (no additional text allowed)
 `;
+
+
+
+
 
             let retries = 3;
             let response;
