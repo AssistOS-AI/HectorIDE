@@ -1,0 +1,90 @@
+<div class="modal-content">
+    <form id="projectForm" class="form-content">
+        <div class="main-container">
+            <div class="content-card">
+                <div class="header">
+                    <h1>Hector IDE</h1>
+                </div>
+                <hr class="divider" />
+
+                <div class="form-group">
+                    <label for="projectTitle">Project Title</label>
+                    <div class="input-wrapper">
+                        <input
+                                type="text"
+                                id="projectTitle"
+                                name="projectTitle"
+                                class="input-field"
+                                placeholder="Enter project title"
+                                required
+                        />
+                        <div class="input-info">
+                            Provide a short, descriptive title for your project
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="divider" />
+
+                <div class="form-group">
+                    <label for="informativeText">Informative Text on Goal and Production</label>
+                    <div class="input-wrapper">
+                        <textarea
+                                id="informativeText"
+                                name="informativeText"
+                                class="textarea-field"
+                                placeholder="Describe the goal and production..."
+                                rows="4"
+                                required
+                        ></textarea>
+                        <div class="input-info">
+                            Provide more context or overview of the project’s objective
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="divider" />
+
+                <div class="form-group">
+                    <label for="promptText">Prompt: Generate Project Specifications, APIs, etc.</label>
+                    <div class="input-wrapper">
+                        <textarea
+                                id="promptText"
+                                name="promptText"
+                                class="textarea-field"
+                                placeholder="Provide prompt details for generating project specifications, APIs, and more..."
+                                rows="4"
+                                required
+                        ></textarea>
+                        <div class="input-info">
+                            Add the details or questions to guide the generation process
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="divider" />
+
+                <div class="form-actions">
+                    <button
+                            type="submit"
+                            class="new-analysis-button"
+                            id="generateDocumentBtn"
+                    >
+                        Generate Document
+                    </button>
+                </div>
+            </div>
+            <div class="message-box">
+                <button type="button" class="message-icon" data-local-action="ideasButtonPress"></button>
+                <input
+                        type="text"
+                        class="message-input"
+                        placeholder="Do you need ideas?"
+                        data-local-action="ideasChat"
+                />
+            </div>
+        </div>
+
+    </form>
+
+</div>

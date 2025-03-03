@@ -1,15 +1,15 @@
 export class RoutingService {
     constructor() {}
     async navigateToLocation(locationArray = [], appName) {
-        const ACHILLESIDE_PAGE = "achilleside-page";
+        const HECTORIDE_PAGE = "hectoride-page";
 
-       if (locationArray.length === 0 || locationArray[0] === ACHILLESIDE_PAGE) {
-            const pageUrl = `${assistOS.space.id}/${appName}/${ACHILLESIDE_PAGE}`;
-            await assistOS.UI.changeToDynamicPage(ACHILLESIDE_PAGE, pageUrl);
+       if (locationArray.length === 0 || locationArray[0] === HECTORIDE_PAGE) {
+            const pageUrl = `${assistOS.space.id}/${appName}/${HECTORIDE_PAGE}`;
+            await assistOS.UI.changeToDynamicPage(HECTORIDE_PAGE, pageUrl);
             return;
         }
-         if(locationArray[locationArray.length-1]!== ACHILLESIDE_PAGE){
-         console.error(`Invalid URL: URL must end with ${ACHILLESIDE_PAGE}`);
+         if(locationArray[locationArray.length-1]!== HECTORIDE_PAGE){
+         console.error(`Invalid URL: URL must end with ${HECTORIDE_PAGE}`);
             return;
         }
         const webComponentName = locationArray[locationArray.length - 1];
