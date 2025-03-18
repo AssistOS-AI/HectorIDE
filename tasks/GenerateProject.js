@@ -137,7 +137,7 @@ REMEMBER:
                     }
                   ]
                 }`,
-                                        `{
+                        `{
                   "chapters": [
                     {
                       "title": "Introduction",
@@ -268,7 +268,7 @@ Please ensure your response:
                 //     console.error(e.message);
                 // } // TODO resolv mermaid render on server side
             }
-            
+
             this.logProgress("Saving project outline...");
             const documentObj = {
                 title: `Test7`,
@@ -327,7 +327,7 @@ Please ensure your response:
                 };
             }
             else{
-                 paragraphObj = {
+                paragraphObj = {
                     text: "The diagram operation failed",
                     commands: {}
                 };
@@ -357,7 +357,7 @@ Please ensure your response:
                     documentId,
                     chapterId: newChapterId
                 });
-                 //
+                //
 
 
                 // const promptParagraph =

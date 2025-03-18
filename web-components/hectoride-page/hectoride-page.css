@@ -147,7 +147,7 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center; /
-    gap: 0.5rem;
+gap: 0.5rem;
     margin: 2rem auto 0;
     max-width: 700px;
 }
@@ -182,8 +182,6 @@ h2 {
     font-size: 0.95rem;
     color: #2d3748;
     box-sizing: border-box;
-    transition: height 0.3s ease;
-    height: 40px; /
 }
 
 .message-input:focus {

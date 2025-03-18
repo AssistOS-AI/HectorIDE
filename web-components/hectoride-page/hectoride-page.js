@@ -4,6 +4,7 @@ const assistOSSDK = require("assistos")
 const llmModule = require("assistos").loadModule("llm", {});
 const applicationModule = require('assistos').loadModule('application', {});
 const personalityModule = require('assistos').loadModule('personality', {});
+const constants = assistOSSDK.constants;
 
 export class HectorIDEPage {
     constructor(element, invalidate) {
@@ -74,17 +75,18 @@ export class HectorIDEPage {
     }
 
     async ideasButtonPress(){
-        // const promptIdea = "Da-mi un mesaj de buna";
-        // const getLLMResponseWithTimeout = async (promptIdea, timeout = 90000) => {
-        //         return Promise.race([
-        //             llmModule.generateText(promptIdea),
-        //             new Promise((_, reject) =>
-        //                 setTimeout(() => reject(new Error('LLM request timed out')), timeout)
-        //             )
-        //         ]);
-        //     };
-        //
-        //     const response= await getLLMResponseWithTimeout(promptIdea);
-        //     console.log(response);
+        const promptIdea = "Hello";
+        let personality = personalityModule.getPersonalityByName(assistOS.space.id,constants.DEFAULT_PERSONALITY_NAME);
+        const getLLMResponseWithTimeout = async (promptIdea, timeout = 90000) => {
+                return Promise.race([
+                    llmModule.generateText(assistOS.space.id, promptIdea, personality.id),
+                    new Promise((_, reject) =>
+                        setTimeout(() => reject(new Error('LLM request timed out')), timeout)
+                    )
+                ]);
+            };
+
+            const response= await getLLMResponseWithTimeout(promptIdea);
+            console.log(response.message);
     }
 }
