@@ -1,4 +1,12 @@
 .main-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+        "content info"
+        "message info";
+    gap: 2rem;
+
     margin: 0 auto;
     padding: 2rem;
     max-width: 1200px;
@@ -9,13 +17,37 @@
 }
 
 .content-card {
+    grid-area: content;
     background: white;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 2rem;
-    margin: 2rem auto;
-    max-width: 700px;
+    margin: 0;
     width: 100%;
+    max-width: none;
+}
+
+
+.info-section {
+    grid-area: info;
+    background: #f7fafc;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    font-size: 1rem;
+    color: #2d3748;
+    line-height: 1.5;
+    height: fit-content;
+}
+
+.message-box {
+    grid-area: message;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 2rem auto 0;
+    max-width: 700px;
 }
 
 .header {
@@ -99,6 +131,7 @@ h2 {
     margin: 0 0 0.5rem 0;
 }
 
+/* -------- Buton generare -------- */
 .new-analysis-button {
     background: linear-gradient(45deg, #4299e1, #667eea);
     color: white;
@@ -120,10 +153,6 @@ h2 {
     box-shadow: 0 6px 8px rgba(66, 153, 225, 0.25);
 }
 
-.button-icon {
-    font-size: 1.2rem;
-}
-
 .divider {
     border: none;
     border-top: 1px solid #e2e8f0;
@@ -143,15 +172,9 @@ h2 {
     margin-top: 1.5rem;
 }
 
-.message-box {
-    display: flex;
-    align-items: center;
-    justify-content: center; /
-gap: 0.5rem;
-    margin: 2rem auto 0;
-    max-width: 700px;
+.button-icon {
+    font-size: 1.2rem;
 }
-
 
 .message-icon {
     background: linear-gradient(45deg, #4299e1, #667eea);
@@ -190,9 +213,13 @@ gap: 0.5rem;
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3);
 }
 
+.message-input.expanded {
+    height: 80px;
+}
 
 @media (max-width: 768px) {
     .main-container {
+        display: block;
         padding: 1rem;
         min-height: auto;
     }
@@ -200,6 +227,12 @@ gap: 0.5rem;
     .content-card {
         padding: 1.5rem;
         margin: 1rem auto;
+        max-width: 700px;
+    }
+
+    .info-section {
+        margin: 1rem auto;
+        max-width: 700px;
     }
 
     .header {
@@ -224,8 +257,4 @@ gap: 0.5rem;
     .message-input {
         width: 100%;
     }
-}
-
-.message-input.expanded {
-    height: 80px;
 }

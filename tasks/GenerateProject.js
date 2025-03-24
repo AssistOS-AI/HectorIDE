@@ -102,6 +102,7 @@ IMPORTANT - READ CAREFULLY:
       "summary": "string"
     }
   ]
+  
 }
 - The summary section must be focused on the implementation from the chapter's name
 - Use ONLY English language and standard ASCII characters
@@ -271,7 +272,7 @@ Please ensure your response:
 
             this.logProgress("Saving project outline...");
             const documentObj = {
-                title: `Test7`,
+                title: `Test9`,
                 type: 'project',
                 content: JSON.stringify(result, null, 2),
                 abstract: JSON.stringify({
