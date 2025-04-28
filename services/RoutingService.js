@@ -1,7 +1,7 @@
 export class RoutingService {
     constructor() {}
     async navigateToLocation(locationArray = [], appName) {
-        const HECTORIDE_PAGE = "hectoride-page";
+        const HECTORIDE_PAGE = "hector-ide-landing";
 
         if (locationArray.length === 0 || locationArray[0] === HECTORIDE_PAGE) {
             const pageUrl = `${assistOS.space.id}/${appName}/${HECTORIDE_PAGE}`;
