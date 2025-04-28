@@ -55,7 +55,7 @@ export class HectorIDEModal {
                 const taskId = await applicationModule.runApplicationTask(
                     assistOS.space.id,
                     "HectorIDE",
-                    "GenerateProject",
+                    "GeneratePhase1",
                     projectData
                 );
                 console.log('Task created with ID:', taskId);

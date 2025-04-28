@@ -30,6 +30,11 @@
       "name": "hector-ide-phase1-info",
       "presenterClassName": "HectorIdePhase1Info",
       "type": "pages"
+    },
+    {
+      "name": "hector-ide-phase2-info",
+      "presenterClassName": "HectorIdePhase2Info",
+      "type": "pages"
     }
   ],
   "services": [

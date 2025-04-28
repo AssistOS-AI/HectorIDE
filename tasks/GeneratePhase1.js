@@ -272,7 +272,7 @@ Please ensure your response:
 
             this.logProgress("Saving project outline...");
             const documentObj = {
-                title: `Test9`,
+                title: `Phase1_${new Date().toISOString()}`,
                 type: 'project',
                 content: JSON.stringify(result, null, 2),
                 abstract: JSON.stringify({
@@ -280,12 +280,11 @@ Please ensure your response:
                 }, null, 2),
                 metadata: {
                     id: null,
-                    title: `technical_project_${new Date().toISOString()}`
+                    title: `Phase_1_${new Date().toISOString()}`
                 }
             };
             const documentId = await documentModule.addDocument(this.spaceId, documentObj);
 
-            //User prompt information
 
             const chapterDataPrompt = {
                 title: "Modify the document",

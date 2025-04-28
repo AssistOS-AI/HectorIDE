@@ -14,10 +14,10 @@ export class HectorIDELanding {
             const documentsMetadata = await assistOS.space.getDocumentsMetadata(assistOS.space.id);
 
             // Filter bias analysis documents
-            const biasDocuments = documentsMetadata.filter((doc) => doc.title.startsWith("Test")) || [];
+            const biasDocuments = documentsMetadata.filter((doc) => doc.title.startsWith("Phase1")) || [];
 
             // Filter bias explained documents
-            const explainedDocuments = documentsMetadata.filter((doc) => doc.title.startsWith("bias_explained_")) || [];
+            const explainedDocuments = documentsMetadata.filter((doc) => doc.title.startsWith("Project2")) || [];
 
             // Get complete documents with all metadata
             this.documents = await Promise.all(
@@ -53,8 +53,8 @@ export class HectorIDELanding {
     }
 
     async beforeRender() {
-        this.tableRows = "";
-        this.explainedRows = "";
+        this.phase1 = "";
+        this.phase2 = "";
 
         // Generate rows for bias analysis documents
         this.documents.forEach((doc) => {
@@ -80,7 +80,7 @@ export class HectorIDELanding {
             const timestamp = abstract.timestamp ? new Date(abstract.timestamp).toLocaleString() : 'N/A';
             const personality = abstract.personality || 'N/A';
 
-            this.tableRows += `
+            this.phase1 += `
                 <div class="analysis-card" data-id="${doc.id}">
                     <div class="analysis-content" data-local-action="viewAnalysis">
                         <h3>${doc.title}</h3>
@@ -136,7 +136,7 @@ export class HectorIDELanding {
 
             const timestamp = abstract && abstract.timestamp ? new Date(abstract.timestamp).toLocaleString() : new Date(doc.metadata.createdAt).toLocaleString();
 
-            this.explainedRows += `
+            this.phase2 += `
                 <div class="analysis-card" data-id="${doc.id}">
                     <div class="analysis-content" data-local-action="viewAnalysis">
                         <h3>${doc.title}</h3>
@@ -156,19 +156,19 @@ export class HectorIDELanding {
 
         if (assistOS.space.loadingDocuments) {
             assistOS.space.loadingDocuments.forEach((taskId) => {
-                this.tableRows += `
+                this.phase1 += `
                     <div data-id="${taskId}" class="analysis-card placeholder-analysis">
                         <div class="loading-icon small"></div>
                     </div>`;
             });
         }
 
-        if (this.tableRows === "") {
-            this.tableRows = `<div class="no-analyses">No analyses found</div>`;
+        if (this.phase1 === "") {
+            this.phase1 = `<div class="no-analyses">No analyses found</div>`;
         }
 
-        if (this.explainedRows === "") {
-            this.explainedRows = `<div class="no-analyses">No analyses found</div>`;
+        if (this.phase2 === "") {
+            this.phase2 = `<div class="no-analyses">No analyses found</div>`;
         }
     }
 
@@ -224,6 +224,15 @@ export class HectorIDELanding {
     async openPhase1Info(){
         const taskId = await assistOS.UI.showModal("hector-ide-phase1-info", {
             "presenter": "hector-ide-phase1-info",
+        }, true);
+        if (taskId) {
+            assistOS.watchTask(taskId);
+        }
+    }
+
+    async openPhase2Info(){
+        const taskId = await assistOS.UI.showModal("hector-ide-phase2-info", {
+            "presenter": "hector-ide-phase2-info",
         }, true);
         if (taskId) {
             assistOS.watchTask(taskId);

@@ -9,6 +9,7 @@
     align-items: center;
     justify-content: center;
     padding: 1rem;
+    z-index: 1050;
 }
 
 .modal-content {
@@ -40,10 +41,12 @@
     justify-content: center;
     transition: all 0.2s ease;
     z-index: 10;
+    color: #4a5568;
 }
 
 .close-button:hover {
     background: #e2e8f0;
+    color: #2d3748;
 }
 
 .form-content {
@@ -71,25 +74,35 @@ label {
 .input-info {
     font-size: 0.85rem;
     color: #718096;
-    margin-top: 0.25rem;
+    margin-top: 0.5rem;
 }
 
-select {
+select,
+textarea {
     width: 100%;
     padding: 0.75rem 1rem;
-    border: 2px solid #e2e8f0;
+    border: 1px solid #e2e8f0;
     border-radius: 8px;
     font-size: 1rem;
     color: #2d3748;
-    transition: all 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
     background: white;
+    box-sizing: border-box;
+    font-family: inherit;
 }
 
-select:hover {
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+select:hover,
+textarea:hover {
     border-color: #cbd5e0;
 }
 
-select:focus {
+select:focus,
+textarea:focus {
     outline: none;
     border-color: #4299e1;
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
@@ -141,43 +154,47 @@ select:focus {
 }
 
 [theme="dark"] label {
-    color: #f8f9fa;
+    color: #cbd5e1;
 }
 
 [theme="dark"] select,
-[theme="dark"] input,
 [theme="dark"] textarea {
     background: #333333;
-    border-color: #404040;
+    border-color: #4a4a4a;
     color: #f8f9fa;
 }
 
 [theme="dark"] select:hover,
-[theme="dark"] input:hover,
 [theme="dark"] textarea:hover {
     border-color: #555555;
 }
 
 [theme="dark"] select:focus,
-[theme="dark"] input:focus,
 [theme="dark"] textarea:focus {
     border-color: #4299e1;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
 }
 
 [theme="dark"] .input-info {
     color: #a0aec0;
 }
 
-[theme="dark"] .explanation-content {
-    background: #333333;
-    border-color: #404040;
-    color: #f8f9fa;
-}
-
 @media (max-width: 768px) {
     .modal-content {
         margin: 1rem;
         padding: 1.5rem;
+    }
+    .checkbox-list {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .checkbox-list {
+        grid-template-columns: repeat(1, 1fr) !important;
+    }
+    .primary-button {
+        width: 100%;
+        justify-content: center;
     }
 }
