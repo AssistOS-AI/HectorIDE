@@ -58,29 +58,23 @@ module.exports = {
                 this.logProgress(`[LOOP START] Processing chapter ${chapterIndex}/${sourceDoc.chapters.length}: ${chapterTitle}...`);
 
                 let originalSummary = "";
-                // Extragem sumarul original INDIFERENT dacă sărim peste procesare sau nu, pentru a-l putea păstra
                 if (chapter.paragraphs && Array.isArray(chapter.paragraphs) && chapter.paragraphs.length > 0 && chapter.paragraphs[0].text) {
                     originalSummary = chapter.paragraphs[0].text;
                     this.logInfo(`Found original summary/text for chapter "${chapterTitle}" (${originalSummary.length} chars).`);
                 } else {
                     this.logWarning(`Chapter "${chapterTitle}" has no initial paragraph text. Will result in empty text.`);
-                    // Chiar dacă nu procesăm, adăugăm capitolul cu text gol pentru consistență
                     processedChapters.push({ title: chapterTitle, text: "" });
                     this.logProgress(`[LOOP SKIP] Skipped chapter ${chapterIndex} due to missing paragraph text.`);
-                    continue; // Mergem la următorul capitol
+                    continue;
                 }
 
-                // --- VERIFICARE PENTRU A SĂRI PESTE CAPITOLUL MERMAID ---
                 if (chapterTitle === "MermaidDiagramChapter") {
                     this.logInfo(`Skipping LLM processing for chapter: ${chapterTitle}. Preserving original content.`);
-                    processedChapters.push({ title: chapterTitle, text: originalSummary }); // Păstrăm conținutul original
+                    processedChapters.push({ title: chapterTitle, text: originalSummary });
                     this.logProgress(`[LOOP SKIP] Skipped Mermaid chapter ${chapterIndex}.`);
-                    continue; // Mergem la următorul capitol
+                    continue;
                 }
-                // --- SFÂRȘIT VERIFICARE ---
 
-
-                // Continuăm cu construcția promptului și apelul LLM doar dacă NU este capitolul Mermaid
                 let chapterPrompt;
                 const basePromptInfo = `
 **Full Document Context:**
@@ -94,25 +88,29 @@ ${fullDocumentContext || "Context could not be extracted."}
                 if (modificationRequest) {
                     this.logInfo(`Building MODIFICATION prompt for chapter "${chapterTitle}"...`);
                     chapterPrompt = `
-You are an expert technical writer. Your task is to rewrite a specific chapter summary based on a user request, using the provided full document context.
+You are an expert technical writer focusing on practical implementation details. Your task is to rewrite a specific chapter summary based *primarily* on a user's modification request, using the provided context.
 
 ${basePromptInfo}
 **User Modification Request:**
 "${modificationRequest}"
 
 **Instructions:**
-Rewrite the "Original Summary" of the chapter "**${chapterTitle}**" to incorporate the "User Modification Request". Ensure the rewritten text remains relevant to the chapter title and the overall document context.
-Output ONLY the final rewritten text for this chapter summary. Do not include introductions, explanations, or formatting markers. Use clear, coherent English and standard ASCII characters.
+1.  **Prioritize the User Request:** Rewrite the "Original Summary" focusing heavily on incorporating and explaining the practical implementation details related to the "**User Modification Request**". If the user requested a specific technology (e.g., MySQL), detail its use in this chapter's context.
+2.  **Contextual Relevance:** Ensure the rewritten text remains relevant to the chapter title ("**${chapterTitle}**") and the overall document context.
+3.  **Conciseness:** Be concise and to the point regarding the modification. Avoid unnecessary introductions or filler text unrelated to the request.
+4.  **Output Format:** Output ONLY the final rewritten text for this chapter summary. Do not include explanations or formatting markers. Use clear, coherent English and standard ASCII characters.
 `;
                 } else {
                     this.logInfo(`Building EXPANSION prompt for chapter "${chapterTitle}"...`);
                     chapterPrompt = `
-You are an expert technical writer. Your task is to expand a specific chapter summary into a detailed practical implementation description, using the provided full document context.
+You are an expert technical writer focusing on practical implementation details. Your task is to expand a specific chapter summary into a **detailed and comprehensive** practical implementation description, using the provided context.
 
 ${basePromptInfo}
 **Instructions:**
-Expand the "Original Summary" of the chapter "**${chapterTitle}**" into a detailed practical implementation description relevant to its title and the overall document context. Ensure the expanded text is comprehensive and at least 300 characters long.
-Output ONLY the final expanded text for this chapter summary. Do not include introductions, explanations, or formatting markers. Use clear, coherent English and standard ASCII characters.
+1.  **Expand Thoroughly:** Expand the "Original Summary" for the chapter "**${chapterTitle}**" into a **detailed and comprehensive** practical implementation description relevant to its title and the overall document context.
+2.  **Focus:** Include concrete actions, relevant technologies, potential challenges, configuration details, and best practices related to the chapter's topic.
+3.  **Length:** Ensure the expanded text is substantial, aiming for **at least 300-400 characters** to provide sufficient technical detail.
+4.  **Output Format:** Output ONLY the final expanded text for this chapter summary. Do not include introductions, explanations, or formatting markers. Use clear, coherent English and standard ASCII characters.
 `;
                 }
                 this.logInfo(`Prompt built for chapter "${chapterTitle}". Length: ${chapterPrompt.length}`);
@@ -128,7 +126,7 @@ Output ONLY the final expanded text for this chapter summary. Do not include int
                         this.logInfo(`LLM response received for chapter "${chapterTitle}". Validating...`);
                         if (response && response.message) {
                             processedText = response.message.trim();
-                            this.logInfo(`LLM response message trimmed (${processedText.length} chars). Checking length requirement if needed...`);
+                            this.logInfo(`LLM response message trimmed (${processedText.length} chars).`);
                             if (!modificationRequest && processedText.length < 250) {
                                 this.logWarning(`LLM response for chapter "${chapterTitle}" expansion is short (${processedText.length} chars). Retrying.`);
                                 throw new Error("Response too short");
@@ -208,12 +206,7 @@ Output ONLY the final expanded text for this chapter summary. Do not include int
             console.error("Stack trace:", error.stack);
             throw error;
         }
-    }, // Sfârșitul funcției runTask
-
-    // Restul metodelor (extractDocumentContent, cancelTask, serialize, getRelevantInfo) rămân la fel
-    // ...
-//}; // Sfârșitul module.exports - asigura-te ca ai acolada finala corecta
-// Adaugă aici restul metodelor: extractDocumentContent, cancelTask, serialize, getRelevantInfo
+    },
 
     extractDocumentContent: async function(document) {
         if (!document) return '';

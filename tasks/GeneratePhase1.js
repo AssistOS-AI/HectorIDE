@@ -6,12 +6,9 @@ module.exports = {
             const utilModule = await this.loadModule("util");
             const personalityModule = await this.loadModule("personality");
             const documentModule = await this.loadModule("document");
-            // const mermaid = require ("mermaid");
             const mermaidImport = await import('../../../../../../apihub-root/wallet/lib/mermaid/mermaid.esm.min.mjs');
             const mermaid = mermaidImport.default;
             mermaid.initialize({startOnLoad: false});
-
-            // const { JSDOM } = require('jsdom');
 
             const ensureValidJson = async (jsonString, maxIterations = 1, jsonSchema = null, correctExample = null) => {
                 const phases = {

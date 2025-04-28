@@ -7,11 +7,6 @@
   "componentsDirPath": "web-components",
   "components":[
     {
-      "name": "hectoride-page",
-      "presenterClassName": "HectorIDEPage",
-      "type": "pages"
-    },
-    {
       "name": "hector-ide-landing",
       "presenterClassName": "HectorIDELanding",
       "type": "pages"
