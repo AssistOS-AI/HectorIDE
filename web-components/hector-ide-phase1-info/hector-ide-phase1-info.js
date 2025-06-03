@@ -25,6 +25,7 @@ export class HectorIdePhase1Info {
 
     async closeModal(_target, taskId) {
         await assistOS.UI.closeModal(_target, taskId);
+
     }
 
 

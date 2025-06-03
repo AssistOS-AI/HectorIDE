@@ -1,0 +1,29 @@
+<div class="modal-overlay download-qa-modal-overlay"> <div class="modal-content download-qa-modal-content">
+    <button type="button" data-local-action="closeModal" class="close-button">&times;</button>
+    <h1>Select Document For Preview</h1>
+    <div class="form-content">
+        <div class="form-group">
+            <label for="qaDocumentSelect">Select QA Document</label>
+            <div class="input-wrapper">
+                <select id="qaDocumentSelect" name="qaDocumentSelect" data-id="qaDocumentSelect" required>
+                    <option value="">Select a QA document...</option>
+                    $$documentOptions
+                </select>
+                <div class="input-info">Choose the generated QA document you want to preview.</div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="button" class="primary-button preview-button" id="previewQaButton" data-local-action="selectForPreviewAction" disabled>
+                    <span class="button-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                Select for Preview
+            </button>
+        </div>
+    </div>
+</div>
+</div>

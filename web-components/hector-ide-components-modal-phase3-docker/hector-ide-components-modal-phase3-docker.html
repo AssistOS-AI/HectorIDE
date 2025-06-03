@@ -1,0 +1,32 @@
+<div class="modal-overlay download-qa-modal-overlay">
+    <div class="modal-content download-qa-modal-content">
+        <button type="button" data-local-action="closeModal" class="close-button">&times;</button>
+        <h1>Deploy Project</h1>
+        <div class="form-content">
+            <div class="form-group">
+                <label for="qaDocumentSelect">Select Project Document for Deployment</label>
+                <div class="input-wrapper">
+                    <select id="qaDocumentSelect" name="qaDocumentSelect" data-id="qaDocumentSelect" required>
+                        <option value="">Select a document to deploy...</option>
+                        $$documentOptions
+                    </select>
+                    <div class="input-info">Choose the project document you want to deploy.</div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="primary-button download-button" id="downloadQaButton" data-local-action="deployProjectAction" disabled>
+                    <span class="button-icon">
+                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                           <polyline points="7 10 12 5 17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                           <line x1="12" y1="5" x2="12" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                       </svg>
+                    </span>
+                    Deploy Project
+                </button>
+            </div>
+            <div id="processingMessage" style="margin-top: 10px; text-align: center;"></div>
+        </div>
+    </div>
+</div>

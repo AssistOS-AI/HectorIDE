@@ -1,8 +1,8 @@
-.main-container-modal {
+.hmdl-main-container {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* Două coloane: formularul și zona de idei */
-    grid-template-rows: auto;       /* Un singur rând */
-    grid-template-areas: "content message"; /* Formularul în stânga, ideile în dreapta */
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "content message";
     gap: 2rem;
     margin: 0 auto;
     padding: 2rem;
@@ -13,7 +13,7 @@
     box-sizing: border-box;
 }
 
-.content-card {
+.hmdl-content-card {
     grid-area: content;
     background: white;
     border-radius: 12px;
@@ -23,17 +23,15 @@
     width: 100%;
 }
 
-.message-box {
+.hmdl-message-box {
     grid-area: message;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    /* Alte stilizări rămân, dacă sunt necesare */
 }
 
-
-.close-button {
+.hmdl-close-button {
     position: absolute;
     right: 1rem;
     top: 1rem;
@@ -52,10 +50,7 @@
     z-index: 10;
 }
 
-
-
-
-.info-section {
+.hmdl-info-section {
     grid-area: info;
     background: #f7fafc;
     border-radius: 12px;
@@ -67,15 +62,14 @@
     height: fit-content;
 }
 
-
-.header {
+.hmdl-header {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 1.5rem;
 }
 
-h1 {
+.hmdl-header h1 {
     font-size: 2rem;
     color: #2d3748;
     margin: 0;
@@ -83,7 +77,8 @@ h1 {
     text-align: center;
 }
 
-h2 {
+.hmdl-content-card h2,
+.hmdl-info-section h2 {
     font-size: 1.5rem;
     color: #2d3748;
     margin: 0 0 1.5rem 0;
@@ -149,8 +144,7 @@ h2 {
     margin: 0 0 0.5rem 0;
 }
 
-/* -------- Buton generare -------- */
-.new-analysis-button {
+.hmdl-submit-button {
     background: linear-gradient(45deg, #4299e1, #667eea);
     color: white;
     padding: 0.75rem 1.5rem;
@@ -166,18 +160,18 @@ h2 {
     transition: all 0.2s ease;
 }
 
-.new-analysis-button:hover {
+.hmdl-submit-button:hover {
     transform: translateY(-1px);
     box-shadow: 0 6px 8px rgba(66, 153, 225, 0.25);
 }
 
-.divider {
+.hmdl-divider {
     border: none;
     border-top: 1px solid #e2e8f0;
     margin: 1.5rem 0;
 }
 
-.analyses-section {
+.hmdl-analyses-section {
     padding-top: 0.5rem;
     text-align: center;
 }
@@ -190,11 +184,11 @@ h2 {
     margin-top: 1.5rem;
 }
 
-.button-icon {
+.hmdl-button-icon {
     font-size: 1.2rem;
 }
 
-.message-icon {
+.hmdl-message-icon {
     background: linear-gradient(45deg, #4299e1, #667eea);
     color: white;
     border: none;
@@ -210,12 +204,12 @@ h2 {
     justify-content: center;
 }
 
-.message-icon:hover {
+.hmdl-message-icon:hover {
     transform: translateY(-1px);
     box-shadow: 0 6px 8px rgba(66, 153, 225, 0.25);
 }
 
-.message-input {
+.hmdl-message-input {
     width: 240px;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
@@ -225,45 +219,45 @@ h2 {
     box-sizing: border-box;
 }
 
-.message-input:focus {
+.hmdl-message-input:focus {
     outline: none;
     border-color: #4299e1;
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3);
 }
 
-.message-input.expanded {
+.hmdl-message-input.expanded {
     height: 80px;
 }
 
 @media (max-width: 768px) {
-    .main-container {
+    .hmdl-main-container {
         display: block;
         padding: 1rem;
         min-height: auto;
     }
 
-    .content-card {
+    .hmdl-content-card {
         padding: 1.5rem;
         margin: 1rem auto;
         max-width: 700px;
     }
 
-    .info-section {
+    .hmdl-info-section {
         margin: 1rem auto;
         max-width: 700px;
     }
 
-    .header {
+    .hmdl-header {
         flex-direction: column;
         gap: 1rem;
         text-align: center;
     }
 
-    h1 {
+    .hmdl-header h1 {
         font-size: 1.75rem;
     }
 
-    .new-analysis-button {
+    .hmdl-submit-button {
         width: 100%;
         justify-content: center;
     }
@@ -272,7 +266,7 @@ h2 {
         flex-direction: column;
     }
 
-    .message-input {
+    .hmdl-message-input {
         width: 100%;
     }
 }

@@ -5,12 +5,18 @@ module.exports = {
             const llmModule = await this.loadModule("llm");
             const documentModule = await this.loadModule("document");
 
-            const { sourceDocumentId, modificationDetails: modificationPrompt } = this.parameters;
+            const { sourceDocumentId, modificationDetails: modificationPrompt, targetDocumentTitle } = this.parameters;
 
             if (!sourceDocumentId) {
                 this.logError("Validation failed: Missing sourceDocumentId parameter.");
                 throw new Error("Missing required parameter: sourceDocumentId");
             }
+
+            if (!targetDocumentTitle) {
+                this.logError("Validation failed: Missing targetDocumentTitle parameter.");
+                throw new Error("Missing required parameter: targetDocumentTitle for the new document");
+            }
+
 
             const modificationRequest = modificationPrompt?.trim() || "";
 
@@ -155,9 +161,8 @@ ${basePromptInfo}
             this.logInfo("Finished chapter processing loop.");
 
             this.logProgress("Saving generated document...");
-            const newDocumentTitle = `Phase_2_${new Date().toISOString().replace(/[:.]/g, '-')}`;
             const newDocumentObj = {
-                title: newDocumentTitle,
+                title: `${targetDocumentTitle}_Phase 2`,
                 type: sourceDoc.type || 'project',
                 abstract: JSON.stringify({
                     generatedAt: new Date().toISOString(),
@@ -170,7 +175,7 @@ ${basePromptInfo}
 
             this.logInfo("Attempting to add new document...");
             const newDocumentId = await documentModule.addDocument(this.spaceId, newDocumentObj);
-            this.logInfo(`Created new document with ID: ${newDocumentId} and title: ${newDocumentTitle}`);
+            this.logInfo(`Created new document with ID: ${newDocumentId} and title: ${targetDocumentTitle}`);
 
             this.logProgress(`Adding ${processedChapters.length} chapters to the new document...`);
             let savedChapterIndex = 0;
@@ -198,7 +203,7 @@ ${basePromptInfo}
             return {
                 status: 'completed',
                 newDocumentId: newDocumentId,
-                newDocumentTitle: newDocumentTitle
+                newDocumentTitle: targetDocumentTitle
             };
 
         } catch (error) {

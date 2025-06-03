@@ -41,22 +41,22 @@ module.exports = {
                         const promptText = `
                 **Role:**
                    - You are a global expert in correcting an invalid JSON string so that it is parsable by a JSON parser.
-                
+
                 **Instructions:**
                    - You will be provided with an invalid JSON string that needs to be corrected.
                    - You will be provided with an error message given by the parser that will help you identify the issue in the JSON string.
                    ${jsonSchema ? `- You will be provided with a JSON schema that the corrected JSON string should adhere to.` : ""}
                    ${correctExample ? `- You will be provided with an example of a correct JSON string that adheres to the schema.` : ""}
-                
+
                 **Invalid JSON string to correct:**
                 "${jsonString}"
-                
+
                 **Parser error:**
                 "${error}"
-                
+
                 ${jsonSchema ? `**JSON Schema Template:**\n${jsonSchema}\n` : ""}
                 ${correctExample ? `**Example of a correct JSON string:**\n${correctExample}\n` : ""}
-                
+
                 **Output Specifications:**
                    - Provide only the corrected JSON string that is valid and parsable.
                    - Do NOT include any code block fences (e.g., \`\`\`json).
@@ -82,11 +82,14 @@ module.exports = {
             };
             this.logInfo(`Parameters received: ${JSON.stringify(this.parameters)}`);
             this.logProgress("Constructing project generation prompt...");
+
+            const projectTitle = this.parameters.projectTitle || `Project_${new Date().toISOString()}`;
+
             let projectPrompt = `
-You are an IT manager responsible to implement a project with the following  context:
-User's Project Focus: **Project Title:** "Online Bookstore Application"
-- **Informative Text on Goal and Production:** "Develop a scalable and secure online bookstore that supports user registration, book browsing, search functionality, payment processing, and order tracking. The system should integrate inventory management and customer review functionalities."
-- **Prompt: Generate Project Specifications, APIs, etc.:** "Generate detailed project specifications including API design, database schema, microservices architecture, Docker containerization, CI/CD pipelines, and cloud deployment strategies."
+You are an IT manager responsible to implement a project with the following context:
+User's Project Focus: **Project Title:** "${this.parameters.projectTitle}"
+- **Informative Text on Goal and Production:** "${this.parameters.informativeText}"
+- **Prompt: Generate Project Specifications, APIs, etc.:** "${this.parameters.promptText}"
 IMPORTANT - READ CAREFULLY:
 - DO NOT include any introductory text or commentary
 - START YOUR RESPONSE DIRECTLY with the JSON object
@@ -99,7 +102,7 @@ IMPORTANT - READ CAREFULLY:
       "summary": "string"
     }
   ]
-  
+
 }
 - The summary section must be focused on the implementation from the chapter's name
 - Use ONLY English language and standard ASCII characters
@@ -108,6 +111,7 @@ IMPORTANT - READ CAREFULLY:
 REMEMBER:
 - Start your response with { and end with } (no other text allowed)
 `;
+
             let retries = 3;
             let response;
             let result;
@@ -146,7 +150,7 @@ REMEMBER:
                     );
                     result = JSON.parse(validJsonString);
                     this.logInfo(`Parsed result for attempt ${4 - retries}:`, result);
-                    // Basic shape check
+
                     if (!result.chapters || !Array.isArray(result.chapters)) {
                         throw new Error(`Invalid response format: missing or malformed "chapters" array`);
                     }
@@ -160,7 +164,7 @@ REMEMBER:
                         throw error;
                     }
                     projectPrompt += `
-                    
+
 Previous attempt failed with error: ${errorMessage}
 Please ensure your response:
 1. Is valid JSON
@@ -172,8 +176,6 @@ Please ensure your response:
             }
             this.logSuccess("Successfully generated project outline");
 
-            // Diagram section
-
             const promptDiagram = `
                     Generate a valid Mermaid diagram using "graph TD" for a vertical diagram.
                     - Output ONLY plain text-based Mermaid code (no numeric encoding, no code fences).
@@ -182,18 +184,12 @@ Please ensure your response:
                     - Replace spaces in node names with underscores (_) or camelCase to ensure compatibility.
                     - Ensure the code is well-formed and error-free.
                     - Do NOT wrap the code in backticks or any code fences.
-                    - Here's the context (but do NOT include it in the output):
-                      * Project Title: "Online Bookstore Application"
-                      * Goal: "Develop a scalable and secure online bookstore..."
-                      * Prompt: "Generate detailed project specs: APIs, DB schema, microservices..."
+                    - Use the following project details as context for generating the diagram structure, but DO NOT include this context description in the output:
+                      * Project Title: "${this.parameters.projectTitle}"
+                      * Goal/Informative Text: "${this.parameters.informativeText}"
+                      * User Prompt/Scope: "${this.parameters.promptText}"
                     Remember, return ONLY the Mermaid code.
-
-                    This is the project schema, use it:
-                    - **Project Title:** "Online Bookstore Application"
-                    - **Informative Text on Goal and Production:** "Develop a scalable and secure online bookstore that supports user registration, book browsing, search functionality, payment processing, and order tracking. The system should integrate inventory management and customer review functionalities."
-                    - **Prompt: Generate Project Specifications, APIs, etc.:** "Generate detailed project specifications including API design, database schema, microservices architecture, Docker containerization, CI/CD pipelines, and cloud deployment strategies."
                     `;
-
 
             let responseDiagram;
             const getLLMResponseWithTimeoutDiagram = async (promptDiagram, timeout = 90000) => {
@@ -230,18 +226,15 @@ Please ensure your response:
             let cnt = 0;
             let ok = false;
             while(!ok) {
-
                 if (await mermaid.parse(finalCode, parseOptions) !== false) {
                     this.logInfo("The mermaid code is correct!");
                     ok = true;
-
                 } else {
                     this.logInfo("Mermaid syntax error! Attempting to correct or handle it...");
                     cnt += 1;
                     this.logInfo(cnt);
                     if (cnt > 20) {
                         this.logInfo("We reached a final, the mermaid code is too wrong to be corrected.");
-
                         break;
                     } else {
                         this.logInfo("Attempting to correct the Mermaid code.");
@@ -259,17 +252,10 @@ Please ensure your response:
                 }
             }
 
-            if(cnt<20){
-                // try {
-                //     const {svg} = await mermaid.render('graphDiv', finalCode);
-                // }catch (e) {
-                //     console.error(e.message);
-                // } // TODO resolv mermaid render on server side
-            }
-
             this.logProgress("Saving project outline...");
+
             const documentObj = {
-                title: `Phase1_${new Date().toISOString()}`,
+                title: `${projectTitle}_Phase 1`,
                 type: 'project',
                 content: JSON.stringify(result, null, 2),
                 abstract: JSON.stringify({
@@ -277,9 +263,10 @@ Please ensure your response:
                 }, null, 2),
                 metadata: {
                     id: null,
-                    title: `Phase_1_${new Date().toISOString()}`
+                    title: `${projectTitle}_Phase 1`
                 }
             };
+
             const documentId = await documentModule.addDocument(this.spaceId, documentObj);
 
 
@@ -313,8 +300,6 @@ Please ensure your response:
                 chapterId
             });
             let paragraphObj = {};
-
-
 
             if (cnt <= 20) {
                 paragraphObj = {
@@ -354,46 +339,6 @@ Please ensure your response:
                     documentId,
                     chapterId: newChapterId
                 });
-                //
-
-
-                // const promptParagraph =
-                //     `Using the information from the text: ${chapter.summary}, generate a detailed description of the practical implementation of the "Online Bookstore Application" project.
-                // - Maintain an overview of the system architecture but focus primarily on the information from chapter.summary.
-                // - Ensure that the response contains a maximum of 400 characters and is clear, coherent, and well-structured.
-                // - Use the project schema as a high-level reference but prioritize practical implementation details based on chapter.summary.
-                //
-                //   This is the project schema, use it as an eagle view of the project:
-                //     - **Project Title:** "Online Bookstore Application"
-                //     - **Informative Text on Goal and Production:** "Develop a scalable and secure online bookstore that supports user registration, book browsing, search functionality, payment processing, and order tracking. The system should integrate inventory management and customer review functionalities."
-                //     \`;
-                // `;
-                //
-                //
-                // let responseParagraph;
-                // const getLLMResponseWithTimeoutDiagram = async (promptParagraph, timeout = 90000) => {
-                //     return Promise.race([
-                //         llmModule.generateText(this.spaceId, promptParagraph),
-                //         new Promise((_, reject) =>
-                //             setTimeout(() => reject(new Error('LLM request timed out')), timeout)
-                //         )
-                //     ]);
-                // };
-                //
-                // responseParagraph = await getLLMResponseWithTimeoutDiagram(promptParagraph);
-                // this.logInfo('Raw response DIAGRAM:', responseParagraph);
-                //
-                // responseParagraph = responseParagraph.message;
-                //
-                // const paragraphObj = {
-                //     text: responseParagraph || '',
-                //     commands: {}
-                // };
-
-
-
-                //
-
 
                 const paragraphObj = {
                     text: chapter.summary || '',

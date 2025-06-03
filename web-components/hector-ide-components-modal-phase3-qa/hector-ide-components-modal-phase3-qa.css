@@ -22,6 +22,16 @@
     max-width: 800px;
     max-height: 90vh;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .close-button {
@@ -53,6 +63,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    flex-grow: 1;
 }
 
 .form-group {
@@ -78,7 +89,8 @@ label {
 }
 
 select,
-textarea {
+textarea,
+input[type="text"] {
     width: 100%;
     padding: 0.75rem 1rem;
     border: 1px solid #e2e8f0;
@@ -92,20 +104,72 @@ textarea {
 }
 
 textarea {
-    min-height: 100px;
+    min-height: 80px;
     resize: vertical;
 }
 
 select:hover,
-textarea:hover {
+textarea:hover,
+input[type="text"]:hover {
     border-color: #cbd5e0;
 }
 
 select:focus,
-textarea:focus {
+textarea:focus,
+input[type="text"]:focus {
     outline: none;
     border-color: #4299e1;
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+.language-selection-wrapper {
+}
+
+.radio-button-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.qa-test-type-list {
+    grid-template-columns: repeat(2, 1fr);
+    max-height: none;
+}
+
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.radio-option:hover {
+    background-color: #f0f4f8;
+}
+
+.radio-option input[type="radio"] {
+    margin-right: 0.75rem;
+    accent-color: #4299e1;
+    width: 1em;
+    height: 1em;
+    cursor: pointer;
+}
+
+.radio-option label {
+    font-weight: normal;
+    color: #2d3748;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    cursor: pointer;
+    flex-grow: 1;
 }
 
 .form-actions {
@@ -135,6 +199,14 @@ textarea:focus {
     box-shadow: 0 6px 8px rgba(66, 153, 225, 0.25);
 }
 
+.primary-button:disabled {
+    background: #cccccc;
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
 .button-icon {
     font-size: 1.2rem;
 }
@@ -142,6 +214,9 @@ textarea:focus {
 [theme="dark"] .modal-content {
     background: #2d2d2d;
     border-color: #404040;
+}
+[theme="dark"] .modal-content h1 {
+    color: #e2e8f0;
 }
 
 [theme="dark"] .close-button {
@@ -158,19 +233,22 @@ textarea:focus {
 }
 
 [theme="dark"] select,
-[theme="dark"] textarea {
+[theme="dark"] textarea,
+[theme="dark"] input[type="text"] {
     background: #333333;
     border-color: #4a4a4a;
     color: #f8f9fa;
 }
 
 [theme="dark"] select:hover,
-[theme="dark"] textarea:hover {
+[theme="dark"] textarea:hover,
+[theme="dark"] input[type="text"]:hover {
     border-color: #555555;
 }
 
 [theme="dark"] select:focus,
-[theme="dark"] textarea:focus {
+[theme="dark"] textarea:focus,
+[theme="dark"] input[type="text"]:focus {
     border-color: #4299e1;
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
 }
@@ -179,25 +257,40 @@ textarea:focus {
     color: #a0aec0;
 }
 
+[theme="dark"] .radio-button-list {
+    background: #333333;
+    border-color: #4a4a4a;
+}
+
+[theme="dark"] .radio-option:hover {
+    background-color: #404040;
+}
+
+[theme="dark"] .radio-option label {
+    color: #f0f4f8;
+}
+
+[theme="dark"] .radio-option input[type="radio"] {
+    accent-color: #667eea;
+}
+
 @media (max-width: 768px) {
     .modal-content {
         margin: 1rem;
         padding: 1.5rem;
     }
-    /* .checkbox-list rules are for other contexts, commented out or remove if not relevant here */
-    /*
-    .checkbox-list {
-        grid-template-columns: repeat(2, 1fr) !important;
+    .radio-button-list {
+        grid-template-columns: repeat(2, 1fr);
     }
-    */
+    .qa-test-type-list {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
 
 @media (max-width: 480px) {
-    /*
-    .checkbox-list {
-        grid-template-columns: repeat(1, 1fr) !important;
+    .radio-button-list {
+        grid-template-columns: repeat(1, 1fr);
     }
-    */
     .primary-button {
         width: 100%;
         justify-content: center;

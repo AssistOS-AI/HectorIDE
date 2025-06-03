@@ -30,6 +30,36 @@
       "name": "hector-ide-phase2-info",
       "presenterClassName": "HectorIdePhase2Info",
       "type": "pages"
+    },
+    {
+      "name": "hector-ide-components-modal-phase3",
+      "presenterClassName": "HectorIdeComponentsModalPhase3",
+      "type": "pages"
+    },
+    {
+      "name": "hector-ide-components-modal-phase3-qa",
+      "presenterClassName": "HectorIdeComponentsModalPhase3Qa",
+      "type": "pages"
+    },
+    {
+      "name": "hector-ide-components-modal-phase3-download",
+      "presenterClassName": "HectorIdeComponentsModalPhase3Download",
+      "type": "pages"
+    },
+    {
+      "name": "hector-ide-components-modal-phase3-preview",
+      "presenterClassName": "HectorIdeComponentsModalPhase3Preview",
+      "type": "pages"
+    },
+    {
+      "name": "hector-ide-components-modal-modify-phase1",
+      "presenterClassName": "HectorIdeComponentsModalModifyPhase1",
+      "type": "pages"
+    },
+    {
+      "name": "hector-ide-components-modal-phase3-docker",
+      "presenterClassName": "HectorIdeComponentsModalPhase3Docker",
+      "type": "pages"
     }
   ],
   "services": [

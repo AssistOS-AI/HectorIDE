@@ -1,0 +1,75 @@
+<div class="modal-overlay">
+    <div class="modal-content">
+        <button type="button" data-local-action="closeModal" class="close-button">&times;</button>
+        <h1>Generate QA Tests</h1>
+        <form id="qaTestForm" class="form-content">
+            <div class="form-group">
+                <label for="sourceApplicationDocument">Select Application Code Document (Phase 3)</label>
+                <div class="input-wrapper">
+                    <select id="sourceApplicationDocument" name="sourceApplicationDocument" data-id="sourceApplicationDocument" required>
+                        <option value="">Select an application document...</option>
+                        $$documentOptions
+                    </select>
+                    <div class="input-info">Choose the generated application for which to create QA tests.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Select Test Type</label>
+                <div class="input-wrapper">
+                    <div id="testTypeList" class="radio-button-list qa-test-type-list">
+                        <div class="radio-option">
+                            <input type="radio" id="testType-unit" name="testType" value="Unit" checked>
+                            <label for="testType-unit">Unit Tests</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="testType-integration" name="testType" value="Integration">
+                            <label for="testType-integration">Integration Tests</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="testType-api" name="testType" value="API">
+                            <label for="testType-api">API Tests</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="testType-e2e" name="testType" value="E2E">
+                            <label for="testType-e2e">E2E Tests</label>
+                        </div>
+                    </div>
+                    <div class="input-info">Choose the type of QA tests to generate.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="programmingLanguageList">Select Programming Language for Tests</label>
+                <div class="input-wrapper language-selection-wrapper">
+                    <div id="programmingLanguageList" class="radio-button-list">
+                    </div>
+                    <div class="input-info">You must select one programming language for the tests.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="testFramework">Select Test Framework (Optional)</label>
+                <div class="input-wrapper">
+                    <input type="text" id="testFramework" name="testFramework" placeholder="e.g., PyTest, Jest, JUnit, Selenium">
+                    <div class="input-info">Specify a test framework for more targeted code generation.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="specificFocus">Specific Features/Modules to Test (Optional)</label>
+                <div class="input-wrapper">
+                    <textarea id="specificFocus" name="specificFocus" rows="3" placeholder="e.g., User authentication, Product search API"></textarea>
+                    <div class="input-info">Describe specific areas to focus the test generation on.</div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="primary-button" id="generateQaButton">
+                    <span class="button-icon">🧪</span>
+                    Generate QA Tests
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

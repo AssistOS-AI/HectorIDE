@@ -1,4 +1,4 @@
-.modal-overlay {
+.download-qa-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -12,16 +12,26 @@
     z-index: 1050;
 }
 
-.modal-content {
+.download-qa-modal-content {
     background: white;
     border-radius: 12px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
     padding: 2rem;
     position: relative;
     width: 100%;
-    max-width: 800px;
+    max-width: 600px;
     max-height: 90vh;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.download-qa-modal-content h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .close-button {
@@ -53,6 +63,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    flex-grow: 1;
 }
 
 .form-group {
@@ -77,8 +88,7 @@ label {
     margin-top: 0.5rem;
 }
 
-select,
-textarea {
+select {
     width: 100%;
     padding: 0.75rem 1rem;
     border: 1px solid #e2e8f0;
@@ -91,31 +101,24 @@ textarea {
     font-family: inherit;
 }
 
-textarea {
-    min-height: 100px;
-    resize: vertical;
-}
-
-select:hover,
-textarea:hover {
+select:hover {
     border-color: #cbd5e0;
 }
 
-select:focus,
-textarea:focus {
+select:focus {
     outline: none;
     border-color: #4299e1;
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
 }
 
 .form-actions {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     display: flex;
     justify-content: center;
 }
 
-.primary-button {
-    background: linear-gradient(45deg, #4299e1, #667eea);
+.primary-button.download-button {
+    background: linear-gradient(45deg, #38a169, #38a169);
     color: white;
     padding: 0.75rem 1.5rem;
     border: none;
@@ -127,21 +130,33 @@ textarea:focus {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    box-shadow: 0 4px 6px rgba(66, 153, 225, 0.2);
+    box-shadow: 0 4px 6px rgba(72, 187, 120, 0.2);
 }
 
-.primary-button:hover {
+.primary-button.download-button:hover:not(:disabled) {
+    background: linear-gradient(45deg, #2f855a, #2f855a);
     transform: translateY(-1px);
-    box-shadow: 0 6px 8px rgba(66, 153, 225, 0.25);
+    box-shadow: 0 6px 8px rgba(72, 187, 120, 0.25);
+}
+
+.primary-button:disabled {
+    background: #cccccc;
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 .button-icon {
     font-size: 1.2rem;
 }
 
-[theme="dark"] .modal-content {
+[theme="dark"] .download-qa-modal-content {
     background: #2d2d2d;
     border-color: #404040;
+}
+[theme="dark"] .download-qa-modal-content h1 {
+    color: #e2e8f0;
 }
 
 [theme="dark"] .close-button {
@@ -157,20 +172,17 @@ textarea:focus {
     color: #cbd5e1;
 }
 
-[theme="dark"] select,
-[theme="dark"] textarea {
+[theme="dark"] select {
     background: #333333;
     border-color: #4a4a4a;
     color: #f8f9fa;
 }
 
-[theme="dark"] select:hover,
-[theme="dark"] textarea:hover {
+[theme="dark"] select:hover {
     border-color: #555555;
 }
 
-[theme="dark"] select:focus,
-[theme="dark"] textarea:focus {
+[theme="dark"] select:focus {
     border-color: #4299e1;
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
 }
@@ -179,26 +191,29 @@ textarea:focus {
     color: #a0aec0;
 }
 
+[theme="dark"] .primary-button.download-button {
+    background: linear-gradient(45deg, #38a169, #48bb78);
+    box-shadow: 0 4px 6px rgba(72, 187, 120, 0.25);
+}
+[theme="dark"] .primary-button.download-button:hover:not(:disabled) {
+    background: linear-gradient(45deg, #2f855a, #38a169);
+    box-shadow: 0 6px 8px rgba(72, 187, 120, 0.3);
+}
+[theme="dark"] .primary-button:disabled {
+    background: #4a5568;
+}
+
 @media (max-width: 768px) {
-    .modal-content {
+    .download-qa-modal-content {
         margin: 1rem;
         padding: 1.5rem;
     }
-    /* .checkbox-list rules are for other contexts, commented out or remove if not relevant here */
-    /*
-    .checkbox-list {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-    */
 }
-
 @media (max-width: 480px) {
-    /*
-    .checkbox-list {
-        grid-template-columns: repeat(1, 1fr) !important;
+    .download-qa-modal-content h1 {
+        font-size: 1.3rem;
     }
-    */
-    .primary-button {
+    .primary-button.download-button {
         width: 100%;
         justify-content: center;
     }

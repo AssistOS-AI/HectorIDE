@@ -184,20 +184,9 @@ textarea:focus {
         margin: 1rem;
         padding: 1.5rem;
     }
-    /* .checkbox-list rules are for other contexts, commented out or remove if not relevant here */
-    /*
-    .checkbox-list {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-    */
 }
 
 @media (max-width: 480px) {
-    /*
-    .checkbox-list {
-        grid-template-columns: repeat(1, 1fr) !important;
-    }
-    */
     .primary-button {
         width: 100%;
         justify-content: center;
